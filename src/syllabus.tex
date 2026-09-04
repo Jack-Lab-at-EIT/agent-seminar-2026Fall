@@ -1,0 +1,96 @@
+\documentclass[12pt]{ctexart}
+
+\usepackage[margin=1.8cm]{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\emergencystretch=2em
+
+% 中文字体：使用系统已安装的思源字体（西文走 Liberation Serif）
+\usepackage{xeCJK}
+\setmainfont{Liberation Serif}
+\setCJKmainfont{Source Han Serif SC}
+\setCJKsansfont{Source Han Sans SC}
+\setCJKmonofont{Source Han Mono SC}
+
+% --- minimal styling ---
+\definecolor{primary}{RGB}{15,15,35}
+\titleformat{\section}{\Large\bfseries\color{primary}}{}{0em}{}
+\titlespacing*{\section}{0pt}{0.6em}{0.2em}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{}{0em}{}
+\titlespacing*{\subsection}{0pt}{0.6em}{0.15em}
+\setlist{nosep, topsep=0.25em}
+
+\setlength{\parskip}{0.15em}
+\setlength{\parindent}{0pt}
+\linespread{1.1}
+
+\newcommand{\coursecode}{2026 Fall}
+\newcommand{\coursename}{AI Agent: Practice}
+
+\begin{document}
+
+\pagestyle{empty}
+
+\begin{center}
+  {\LARGE\bfseries \coursecode{} -- \coursename}\\[0.4em]
+  {\small Instructor: 林逸涵 \texttt{yhlin@eitech.edu.cn}}
+\end{center}
+\vspace{0.25em}
+
+\section{Overview}
+
+Agents are software systems centered on Large Language Models; they interact with their environment---invoking tools, writing code, and retrieving information---through perception, reasoning, planning, and action to accomplish multi-step, real-world tasks.
+
+The ultimate goal of this seminar is to enable students to understand the working principles of agents and confidently select the agents that meet their needs.
+
+\section{Goal}
+
+By the end of the course, students should be able to:
+
+\begin{itemize}
+  \item Explain the fundamental components of an intelligent agent (the ReAct loop) and mainstream design paradigms;
+  \item Configure tool calling (or tool use) for an LLM and design appropriate tool interfaces;
+  \item Build agents capable of retaining context by leveraging context management, Retrieval-Augmented Generation (RAG), and memory mechanisms;
+  \item Decompose complex tasks into multi-agent collaborative workflows and implement them using mainstream frameworks;
+  \item Design evaluation metrics for their agents and conduct demonstrations.
+\end{itemize}
+
+\section{Schedule}
+
+\begin{center}
+\begin{tabularx}{0.8\textwidth}{@{}c c >{\raggedright\arraybackslash}X@{}}
+  \toprule
+  \bfseries Week & \bfseries Date & \bfseries Topic \\
+  \midrule
+  1 & Sep 11  & LLM; Agent \& the ReAct Loop; Tool Calling Basics; Harness \\
+  2 & Sep 18  & Tool Design in Depth \\
+  3 & Sep 25  & Context, RAG \& Skills \\
+  4 & Oct 2   & Planning \& Multi-Agent \\
+  5 & Oct 9   & Evaluation \& Wrap-up \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\noindent\textbf{Time:} Every Friday 14:00--16:00 \quad \textbf{Location:} 郑坚利红楼 413
+
+\noindent 5 sessions, 1h lecture + 1h hands-on each
+
+\section{Reading}
+
+\begin{description}[leftmargin=6em, font=\normalfont\emph]
+  \item[ReAct] Synergizing Reasoning and Acting in Language Models \href{https://arxiv.org/abs/2210.03629}{(arXiv:2210.03629)}
+  \item[CodeAct] Code as Actions for Language Model Agents \href{https://arxiv.org/abs/2402.01030}{(arXiv:2402.01030)}
+  \item[mini-swe-agent] A minimal coding agent \href{https://github.com/swe-agent/mini-swe-agent}{(GitHub: swe-agent/mini-swe-agent)}
+\end{description}
+
+\section{AI Policy}
+
+The course \emph{encourages} the use of agent-based programming tools to assist with the hands-on sessions, and requires that any tools used be noted in the submission.
+
+\end{document}
