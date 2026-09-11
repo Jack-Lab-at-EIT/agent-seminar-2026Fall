@@ -106,7 +106,7 @@ ReAct (\href{https://arxiv.org/abs/2210.03629}{Yao et al.\ 2022}): Thought, Acti
 
 \section{LLM: the decision-maker}
 
-The decision-maker inside the loop above is a \emph{LLM} (\strong{L}arge \strong{L}anguage \strong{M}odel). It reads a sequence of tokens and predicts the next one.
+The decision-maker inside the loop above is a \emph{LLM} (\textbf{L}arge \textbf{L}anguage \textbf{M}odel). It reads a sequence of tokens and predicts the next one.
 
 \subsection{Tokens}
 
@@ -114,11 +114,11 @@ The input of LLM are \emph{Token}s, encompassing text, images, and videos (multi
 
 \subsection{Pricing}
 
-Expanding:
-
-\url{https://api-docs.deepseek.com/quick_start/pricing/}
-
-\url{https://developers.openai.com/api/docs/pricing}
+See:
+\begin{itemize}
+  \item \url{https://api-docs.deepseek.com/quick_start/pricing/}
+  \item \url{https://developers.openai.com/api/docs/pricing}
+\end{itemize}
 
 \subsection{Context window}
 
@@ -133,7 +133,7 @@ In token, e.g. $ 40960 = 40 \times 1024 $
 
 \subsection{Real world Model}
 
-Run ollama show qwen3:8b
+Run \texttt{ollama show qwen3:8b}:
 
 \begin{verbatim}
   Model
@@ -160,7 +160,6 @@ Run ollama show qwen3:8b
     Apache License               
     Version 2.0, January 2004    
 \end{verbatim}
-    ...
 
 \section{The harness}
 
@@ -168,9 +167,7 @@ All but Model itself.
 
 \section{Tool calling}
 
-Expanding:
-
-\url{https://api-docs.deepseek.com/guides/tool_calls}
+See \url{https://api-docs.deepseek.com/guides/tool_calls}.
 
 \begin{verbatim}
 { "type": "function",
@@ -204,11 +201,40 @@ assistant  It is 18 °C in Tokyo right now.
 
 \section{The spec it must pass}
 
-\textbf{[TODO]}
+\begin{center}
+\small
+\begin{tabularx}{0.98\textwidth}{@{}>{\raggedright\arraybackslash}X ll@{}}
+  \toprule
+  \textbf{Query} & \textbf{Tools expected, in order} & \textbf{Answer must contain} \\
+  \midrule
+  What is the weather in Tokyo?     & \texttt{get\_weather} & \texttt{Tokyo}, \texttt{18} \\
+  What is the weather in Reykjavik? & \texttt{get\_weather} & \texttt{Reykjavik}, \texttt{2} \\
+  What is 42 + 38?                  & \texttt{add}          & \texttt{80} \\
+  Hello! What can you do?           & \emph{(none)}         & \texttt{weather}, \texttt{add} \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\noindent What the fields demand:
+\begin{itemize}
+  \item \textbf{\texttt{expect\_tools}} --- routing: the model must pick the
+    right tool \emph{because the schema advertised it}, and call tools in a
+    working order.
+  \item \textbf{\texttt{answer\_contains}} --- grounding: the observation must
+    actually reach the user, not just sit in the transcript.
+  \item The last scenario is a \emph{negative} test: smalltalk must not burn a
+    tool call.
+\end{itemize}
 
 \section{Lab}
 
-\textbf{[TODO --- hands-on under design.]}
+\begin{verbatim}
+请你写一个基本的 ReAct agent，带有 weather tool
+\end{verbatim}
+
+\begin{verbatim}
+使其能够输出 trejectory
+\end{verbatim}
 
 \noindent\textbf{Next week:} tools in depth --- schemas worth writing, errors a model can recover from, safety.
 
