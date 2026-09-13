@@ -40,12 +40,28 @@
                 ]
               )
             );
+            fonts = with pkgs; [
+              liberation_ttf
+              source-han-sans
+              source-han-serif
+              source-han-mono
+            ];
+            fontsConf = pkgs.makeFontsConf { fontDirectories = fonts; };
           in
           {
-            packages = with pkgs; [
-              typst
-              tinymist
-              tex
+            packages =
+              with pkgs;
+              [
+                typst
+                tinymist
+                tex
+              ]
+              ++ fonts;
+            env = [
+              {
+                name = "FONTCONFIG_FILE";
+                value = fontsConf;
+              }
             ];
           };
       };

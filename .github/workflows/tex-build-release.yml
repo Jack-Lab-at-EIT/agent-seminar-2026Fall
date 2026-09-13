@@ -1,0 +1,57 @@
+name: Build TeX PDFs
+
+on:
+  push:
+    branches: [master]
+    tags: ["20*"]
+  pull_request:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Enable Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Build PDFs via nix devshell
+        run: |
+          mkdir -p build
+          shopt -s nullglob
+          tex_files=(src/*.tex)
+          if [ ${#tex_files[@]} -eq 0 ]; then
+            echo "No TeX files found in src/*.tex"
+            exit 1
+          fi
+          echo "Building: ${tex_files[*]}"
+          # .latexmkrc sets $out_dir='../build', so PDFs land in build/ by default.
+          nix develop ./nix --command bash -c 'for f in src/*.tex; do echo "=== latexmk $f ==="; latexmk "$f" || exit 1; done'
+          echo "=== build/ ==="
+          ls -lh build/
+          ls build/*.pdf
+
+      - name: Upload PDFs as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdfs
+          path: build/*.pdf
+          if-no-files-found: error
+
+      - name: Upload PDFs to GitHub Release
+        # date-tag push (YYYY-MM-DD*) or a published Release (including manual `gh release create`)
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/*.pdf
+          fail_on_unmatched_files: true
