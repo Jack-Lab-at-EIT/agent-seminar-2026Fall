@@ -1,3 +1,5 @@
+[![Build TeX PDFs](https://github.com/Jack-Lab-at-EIT/agent-seminar-2026Fall/actions/workflows/tex-build-release.yml/badge.svg)](https://github.com/Jack-Lab-at-EIT/agent-seminar-2026Fall/actions/workflows/tex-build-release.yml)
+
 ## Structure
 
 Source code: `src/*.tex`; artifacts: `build/`.
